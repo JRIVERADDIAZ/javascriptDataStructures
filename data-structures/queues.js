@@ -9,18 +9,22 @@
 * respectively. 
  */
 
-function Queue() {
-    let items = [];
+class Queues {
 
-    this.enqueue = function (element) {
+    items = [];
+    constructor(items) {
+        this.items = items;
+    }
+
+    enqueue = function (element) {
         items.push(element);
     };
 
-    this.dequeue = function () {
+    dequeue = function () {
         return items.shift();
     };
 
-    this.front = function () {
+    front = function () {
         return items[0];
     };
 
