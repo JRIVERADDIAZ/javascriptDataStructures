@@ -27,6 +27,36 @@ class BinarySearchTree {
         }
     }
 
+   inserBalancingNode = (node, element) => {
+        if(node === null) {
+            node = new Node(element);
+        } else if(element < node.key){
+            node.left = this.inserBalancingNode(node.left, element);
+            if (node.left !== null) {
+                if ((this.getHeight(node.left) - this.getHeight(node.right)) > 1) {
+                    if (element < node.left.key) {
+                        node = this.rotateLL(node);
+                    } else {
+                        node = this.rotateLR(node);
+                    }
+                }
+            }
+        } else if(element > node.key){
+            node.right = this.inserBalancingNode(node.right, element);
+            if (node.right !== null) {
+                if ((this.getHeight(node.right) - this.getHeight(node.left)) > 1) {
+                    if (element > node.right.key) {
+                        node = this.rotateRR(node);
+                    } else {
+                        node = this.rotateRL(node);
+                    }
+                }
+            }
+        } else {
+            return node;
+        }
+   }
+
     insert(key) {
         let newNode = new Node(key);
 
@@ -96,7 +126,6 @@ class BinarySearchTree {
 
     search = (key) => {
         return this.searchNode(this.root, key);
-
     }
 
     removeNode = (node, key) => {
@@ -134,6 +163,8 @@ class BinarySearchTree {
             return node;
         }
     }
+
+
 
 }
 
