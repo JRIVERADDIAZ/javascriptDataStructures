@@ -105,4 +105,3 @@ let averageTemp = new Array(averageTempDay1, averageTempDay2);
 traverseMatrix(averageTemp);    
 
 
-
