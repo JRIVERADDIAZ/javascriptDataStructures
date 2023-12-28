@@ -1,4 +1,4 @@
-/*
+
 class Dictionary {
     constructor() {
         this.items = {};
@@ -52,7 +52,7 @@ class Queue {
     }
 
     enqueue = function (element) {
-      return this.items.push(element);
+        return this.items.push(element);
     };
 
     dequeue = function () {
@@ -70,6 +70,7 @@ class Queue {
 }
 
 class Graph {
+
     constructor() {
         this.vertices = [];
         this.adjList = new Dictionary();
@@ -105,99 +106,81 @@ class Graph {
         return s;
     }
 
+    BFS = (v) => {
 
+        let color = this.initializeColor();
 
-    bfs(v, callback) {
-
-        const color = this.initializeColor();
-        const queue = [];
-        queue.push(v);
-
-        while (queue.length) {
-
-            const u = queue.shift();
-            const neighbors = this.adjList.get(u);
-            color[u] = 'grey';
-
-            for (let i = 0; i < neighbors.length; i++) {
-                const w = neighbors[i];
-                if (color[w] === 'white') {
-                    color[w] = 'grey';
-                    queue.push(w);
-                }
-            }
-
-            color[u] = 'black';
-
-            if (callback) {
-                callback(u);
-            }
-        }
-
-    }
-
-    bfs = (v) => {
-        var neighbors = [];
-        var vertices = [];
-        var adjList = new Dictionary();
-        var color = this.initializeColor(),
-            queue = new Queue(),
-            d = [],          // Array to store distances from the starting vertex
-            pred = [];       // Array to store predecessors in the BFS traversal
+        let queue = new Queue(),
+            d = [],
+            pred = [];
 
         queue.enqueue(v);
 
-        for (var i = 0; i < vertices.length; i++) {
-            d[vertices[i]] = 0;    // Initialize distances to 0
-            pred[vertices[i]] = null;  // Initialize predecessors to null
+        for (let i = 0; i < this.vertices.length; i++) {
+            d[this.vertices[i]] = 0;
+            pred[this.vertices[i]] = null;
         }
 
         while (!queue.isEmpty()) {
-            // Dequeue a vertex from the queue
-            var u = queue.dequeue();
-
-            // Get the neighbors of the current vertex u from the adjacency list
-            neighbors = adjList.get(u);
-
-            // Mark the current vertex as visited (color it grey)
+            let u = queue.dequeue(),
+                neighbors = this.adjList.get(u);
             color[u] = 'grey';
-
-            // Explore the neighbors of the current vertex u
-            for (i = 0; i < neighbors.length; i++) {
-                var w = neighbors[i];
-
-                // If the neighbor has not been visited (color white)
+            for (let i = 0; i < neighbors.length; i++) {
+                let w = neighbors[i];
                 if (color[w] === 'white') {
-                    // Mark the neighbor as visited (color it grey)
                     color[w] = 'grey';
-
-                    // Update the distance from the starting vertex to the neighbor
                     d[w] = d[u] + 1;
-
-                    // Set the predecessor of the neighbor
                     pred[w] = u;
-
-                    // Enqueue the neighbor for further exploration
                     queue.enqueue(w);
                 }
             }
-
-            // Mark the current vertex as completely visited (color it black)
             color[u] = 'black';
         }
+
+
         return {
             distances: d,
             predecessors: pred
         };
-    };
+
+    }
+
+    dfsVisit = (u, color, callback) => {
+        color[u] = 'grey';
+        if (callback) {
+            callback(u);
+        }
+        let neighbors = this.adjList.get(u);
+        for (let i = 0; i < neighbors.length; i++) {
+            let w = neighbors[i];
+            if (color[w] === 'white') {
+                this.dfsVisit(w, color, callback);
+            }
+        }
+        color[u] = 'black';
+    }
+
+    DFS = (callback) => {
+
+        let color = this.initializeColor();
+
+        for (let i = 0; i < this.vertices.length; i++) {
+            if (color[this.vertices[i]] === 'white') {
+                this.   dfsVisit(this.vertices[i], color, callback);
+            }
+        }
+    }
+
 
 }
 
 let graph = new Graph();
-let myVertices = ['A','B','C','D','E','F','G','H','I'];
-for (let i=0; i<myVertices.length; i++){
+let myVertices = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I'];
+
+for (let i = 0; i < myVertices.length; i++) {
     graph.addVertex(myVertices[i]);
 }
+
 graph.addEdge('A', 'B');
 graph.addEdge('A', 'C');
 graph.addEdge('A', 'D');
@@ -210,16 +193,34 @@ graph.addEdge('B', 'F');
 graph.addEdge('E', 'I');
 
 
-function printNode(value){ //{16}
-    console.log('Visited vertex: ' + value); //{17}
+function printNode(value) {
+    console.log('Visited vertex: ' + value);
 }
 
-var shortestPathA = graph.bfs(myVertices[0]);
-console.log(shortestPathA);
-*/
+var shortestPathA = graph.BFS(myVertices[0]);
 
 
+var fromVertex = myVertices[0];
 
+for (var i = 1; i < myVertices.length; i++) {
 
+    var toVertex = myVertices[i],
+        path = new Stack();
 
+    for (var v = toVertex; v !== fromVertex;
+        v = shortestPathA.predecessors[v]) {
+        path.push(v);
+    }
 
+    path.push(fromVertex);
+    var s = path.pop();
+
+    while (!path.isEmpty()) {
+        s += ' - ' + path.pop();
+    }
+
+    //   console.log(s); log the paths in order to reach the last vertex of the graph from the first vertex
+
+}
+
+graph.DFS(printNode);

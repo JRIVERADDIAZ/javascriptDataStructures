@@ -9,7 +9,7 @@ class Node {
 class BinarySearchTree {
     constructor() {
         this.root = null;
-    }
+    };
 
     insertNode(node, newNode) {
         if (newNode.key < node.key) {
@@ -25,12 +25,12 @@ class BinarySearchTree {
                 this.insertNode(node.right, newNode);
             }
         }
-    }
+    };
 
-   inserBalancingNode = (node, element) => {
-        if(node === null) {
+    inserBalancingNode = (node, element) => {
+        if (node === null) {
             node = new Node(element);
-        } else if(element < node.key){
+        } else if (element < node.key) {
             node.left = this.inserBalancingNode(node.left, element);
             if (node.left !== null) {
                 if ((this.getHeight(node.left) - this.getHeight(node.right)) > 1) {
@@ -41,7 +41,7 @@ class BinarySearchTree {
                     }
                 }
             }
-        } else if(element > node.key){
+        } else if (element > node.key) {
             node.right = this.inserBalancingNode(node.right, element);
             if (node.right !== null) {
                 if ((this.getHeight(node.right) - this.getHeight(node.left)) > 1) {
@@ -55,7 +55,7 @@ class BinarySearchTree {
         } else {
             return node;
         }
-   }
+    };
 
     insert(key) {
         let newNode = new Node(key);
@@ -65,7 +65,7 @@ class BinarySearchTree {
         } else {
             this.insertNode(this.root, newNode);
         }
-    }
+    };
 
     minNode(node) {
         if (node) {
@@ -76,7 +76,7 @@ class BinarySearchTree {
         }
 
         return null;
-    }
+    };
 
     min = () => {
         return this.minNode(this.root);
@@ -88,11 +88,11 @@ class BinarySearchTree {
             this.postOrderTraverseNode(node.right, callback);
             callback(node.key);
         }
-    }
+    };
 
     postOrderTraverse(callback) {
         this.postOrderTraverseNode(this.root, callback);
-    }
+    };
 
     inOrderTraverseNode(node, callback) {
         if (node !== null) {
@@ -100,15 +100,15 @@ class BinarySearchTree {
             callback(node.key);
             this.inOrderTraverseNode(node.right, callback);
         }
-    }
+    };
 
     printNode(value) {
         console.log(value);
-    }
+    };
 
     inOrderTraverse(callback) {
         this.inOrderTraverseNode(this.root, callback);
-    }
+    };
 
     searchNode = (node, key) => {
         if (node === null) {
@@ -122,11 +122,11 @@ class BinarySearchTree {
         } else {
             return true;
         }
-    }
+    };
 
     search = (key) => {
         return this.searchNode(this.root, key);
-    }
+    };
 
     removeNode = (node, key) => {
         if (node === null) {
@@ -162,9 +162,7 @@ class BinarySearchTree {
             node.right = this.removeNode(node.right, aux.key);
             return node;
         }
-    }
-
-
+    };
 
 }
 
@@ -191,3 +189,5 @@ let min = tree.minNode(tree.root);
 console.log('min', min);
 
 console.log(tree.search(20) ? 'Key 1 found.' : 'Key 1 not found.');
+
+tree.printNode(tree.root);

@@ -43,5 +43,3 @@
         this.items = {};
     }
 }
-
-export default Dictionary;

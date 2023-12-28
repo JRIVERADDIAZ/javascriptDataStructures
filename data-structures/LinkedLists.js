@@ -130,14 +130,14 @@ class LinkedList {
     // isEmpty receives no parameters and returns true if the list does not contain any elements and false if the size of the list is bigger than 0
 
     isEmpty = () => {
-    return this.length === 0;
+        return this.length === 0;
     }
 
     // size return the length of the list equal to the number of elements that the list contains}
 
     size = () => {
-            return this.length;
-        }
+        return this.length;
+    }
 
     // getHead returns the head of the list
 
@@ -149,13 +149,13 @@ class LinkedList {
 
 }
 
-let list = new LinkedList();
+// let list = new LinkedList();
 
-list.append(1);
-list.append(2);
+// list.append(1);
+// list.append(2);
 // list.insert(1, 3); // Inserta el valor 3 en la posición 1
 // list.remove(0);   // Elimina el elemento en la posición 0
 
+// console.log(list.toString());
+// console.log(list.indexOf(2))
 
-console.log(list.toString());
-console.log(list.indexOf(2))
